@@ -28,7 +28,7 @@ struct ListView: View {
                 .padding([.horizontal, .top])
             
             List($items) { $item in
-                
+                Text(item.title)
             }
             .scrollContentBackground(.hidden)
             .listStyle(.insetGrouped)
