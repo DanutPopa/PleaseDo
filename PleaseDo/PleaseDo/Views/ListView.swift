@@ -28,7 +28,11 @@ struct ListView: View {
                 .padding([.horizontal, .top])
             
             List($items) { $item in
-                Text(item.title)
+                NavigationLink {
+                    Text("Item details view")
+                } label: {
+                    ListItemView(item: item, height: 100)
+                }
             }
             .scrollContentBackground(.hidden)
             .listStyle(.insetGrouped)
@@ -37,9 +41,11 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(title: "To Do", items: .constant([
-        Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown),
-        Item(id: "123abc", authorId: "John Doe", title: "Second item", description: "Second description", startDate: .now + 5, status: .inProgress, priority: .high),
-        Item(id: "789xyz", authorId: "John Doe", title: "Third item", description: "Third description", startDate: .now + 10, status: .todo, priority: .low)
+    NavigationStack {
+        ListView(title: "To Do", items: .constant([
+            Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown),
+            Item(id: "123abc", authorId: "John Doe", title: "Second item", description: "Second description", startDate: .now + 5, status: .inProgress, priority: .high),
+            Item(id: "789xyz", authorId: "John Doe", title: "Third item", description: "Third description", startDate: .now + 10, status: .todo, priority: .low)
         ]))
+    }
 }
