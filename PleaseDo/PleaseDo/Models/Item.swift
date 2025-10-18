@@ -15,6 +15,7 @@ struct Item: Identifiable {
     var startDate: Date = .now
     var status: Status
     var priority: Priority
+    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown)
 }
 
 enum Status: String {
