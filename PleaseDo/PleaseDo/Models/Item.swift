@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Identifiable {
+struct Item: Identifiable, Equatable, Hashable {
     let id: String
     let authorId: String
     var title: String
@@ -15,7 +15,12 @@ struct Item: Identifiable {
     var startDate: Date = .now
     var status: Status
     var priority: Priority
+    
     static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown)
+    
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 enum Status: String {

@@ -39,14 +39,6 @@ struct HomeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Home")
-            .navigationDestination(for: NavPath.self, destination: { path in
-                switch path {
-                case .newItem:
-                    Text("New item view here")
-                case .details:
-                    Text("Item details view here")
-                }
-            })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -65,6 +57,15 @@ struct HomeView: View {
 
                 }
             }
+            .navigationDestination(for: NavPath.self, destination: { path in
+                switch path {
+                case .newItem:
+                    NewItemView()
+                case .details(let item):
+                    ItemDetailsView(item: item)
+                }
+            })
+            
         }
     }
 }
