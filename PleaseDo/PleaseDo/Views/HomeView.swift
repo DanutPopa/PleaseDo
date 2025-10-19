@@ -62,7 +62,7 @@ struct HomeView: View {
                 case .newItem:
                     NewItemView()
                 case .details(let item):
-                    Text(item.title)
+                    ItemDetailsView(item: item)
                 }
             })
             
