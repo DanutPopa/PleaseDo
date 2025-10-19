@@ -28,9 +28,7 @@ struct ListView: View {
                 .padding([.horizontal, .top])
             
             List($items) { $item in
-                NavigationLink {
-                    Text("Item details view")
-                } label: {
+                NavigationLink(value: NavPath.details(item)) {
                     ListItemView(item: item, height: 100)
                 }
             }
