@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct NewItemView: View {
+    @State private var text = ""
+    @State private var description = ""
+    
     var body: some View {
-        Text("Create new item here")
+        VStack {
+            TitledTextField(title: "Title", placeholder: "What do you need to do ?", text: $text)
+            
+            Divider()
+            
+            TitledTextField(title: "Description", placeholder: "Add a brief description", text: $description)
+            
+            Divider()
+        }
     }
 }
 
