@@ -14,6 +14,8 @@ struct NewItemView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            
             TitledTextField(title: "Title", placeholder: "What do you need to do ?", text: $text)
             
             Divider()
@@ -27,7 +29,15 @@ struct NewItemView: View {
             Divider()
             
             PriorityMenu(priority: $item.priority)
+            
+            Spacer()
+            
+            CTAButton(title: "Confirm") {
+                print("CTAButton tapped")
+            }
+
         }
+        .padding(.horizontal)
     }
 }
 

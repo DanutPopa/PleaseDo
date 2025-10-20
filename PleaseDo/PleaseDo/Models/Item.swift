@@ -16,7 +16,7 @@ struct Item: Identifiable, Equatable, Hashable {
     var status: Status
     var priority: Priority
     
-    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown)
+    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .todo, priority: .low)
     
     static func ==(lhs: Item, rhs: Item) -> Bool {
         lhs.id == rhs.id
