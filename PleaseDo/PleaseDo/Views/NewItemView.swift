@@ -10,6 +10,7 @@ import SwiftUI
 struct NewItemView: View {
     @State private var text = ""
     @State private var description = ""
+    @State private var item: Item = .example
     
     var body: some View {
         VStack {
@@ -20,6 +21,12 @@ struct NewItemView: View {
             TitledTextField(title: "Description", placeholder: "Add a brief description", text: $description)
             
             Divider()
+            
+            StatusMenu(status: $item.status)
+            
+            Divider()
+            
+            PriorityMenu(priority: $item.priority)
         }
     }
 }

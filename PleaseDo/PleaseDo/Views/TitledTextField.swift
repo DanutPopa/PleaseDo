@@ -13,7 +13,7 @@ struct TitledTextField: View {
     @Binding var text: String
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 2) {
             Text(title)
                 .font(.caption2)
                 .foregroundColor(.secondary)
