@@ -15,6 +15,11 @@ struct LoginView: View {
             
             LoginTitleView()
             
+            Text("Login")
+                .font(.title)
+                .fontWeight(.semibold)
+            
+            
             Spacer()
         }
     }
