@@ -16,14 +16,14 @@ struct Item: Identifiable, Equatable, Hashable {
     var status: Status
     var priority: Priority
     
-    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .done, priority: .unknown)
+    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .todo, priority: .low)
     
     static func ==(lhs: Item, rhs: Item) -> Bool {
         lhs.id == rhs.id
     }
 }
 
-enum Status: String {
+enum Status: String, CaseIterable {
     case todo = "To Do"
     case inProgress = "In Progress"
     case done = "Done"
@@ -39,7 +39,7 @@ enum Status: String {
     }
 }
 
-enum Priority: String {
+enum Priority: String, CaseIterable {
     case low = "Low"
     case medium = "Medium"
     case high = "High"
