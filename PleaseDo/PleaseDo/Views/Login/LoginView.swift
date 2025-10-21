@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State private var text = "Don't have an account?"
+    @State private var prompt = "Sign up here"
+    @State private var isLogginIn = true
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -32,6 +35,8 @@ struct LoginView: View {
             .padding(.horizontal)
             
             Spacer()
+            
+            TogglePromptView(text: $text, prompt: $prompt, isLoggingIn: $isLogginIn)
         }
         .padding()
     }
