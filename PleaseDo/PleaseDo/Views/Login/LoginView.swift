@@ -23,7 +23,11 @@ struct LoginView: View {
                 .fontWeight(.semibold)
                 .padding(.horizontal)
             
-            LoginFields()
+            if isLogginIn {
+                LoginFields()
+            } else {
+                SignUpFields()
+            }
             
             HStack {
                 Spacer()
