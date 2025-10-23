@@ -41,4 +41,8 @@ final class LoginVM: ObservableObject {
     @Published var newPassword = ""
     @Published var firstName = ""
     @Published var lastName = ""
+    
+    func signUp() {
+        auth.signUP(firstName, lastName: lastName, newEmail, newPassword)
+    }
 }
