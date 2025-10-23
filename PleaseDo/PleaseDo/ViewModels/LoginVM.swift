@@ -1,0 +1,35 @@
+//
+//  LoginVM.swift
+//  PleaseDo
+//
+//  Created by Danut Popa on 23.10.2025.
+//
+
+import Foundation
+import Combine
+
+final class LoginVM: ObservableObject {
+    
+    enum Status {
+        case unknown, loggedIn, loggedOut
+    }
+    
+    @Published var loggedStatus: Status = .unknown
+    @Published var isLogginIn = true {
+        didSet {
+            if isLogginIn {
+                titleText = "Login"
+                toggleText = "Don't have an account?"
+                prompt = "Sign up here"
+            } else {
+                titleText = "Sign up"
+                toggleText = "Already have an account?"
+                prompt = "Login here"
+            }
+        }
+    }
+    
+    @Published var titleText = "Login"
+    @Published var toggleText = "Don't have an account?"
+    @Published var prompt = "Sign up here"
+}
