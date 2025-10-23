@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SignUpFields: View {
-    @State private var firstName = ""
-    @State private var lastName = ""
-    @State private var email = ""
-    @State private var password = ""
+    @Binding var firstName: String
+    @Binding var lastName: String
+    @Binding var email: String
+    @Binding var password: String
     
     var body: some View {
         VStack(spacing: 12) {
@@ -29,5 +29,5 @@ struct SignUpFields: View {
 }
 
 #Preview {
-    SignUpFields()
+    SignUpFields(firstName: .constant(""), lastName: .constant(""), email: .constant(""), password: .constant(""))
 }

@@ -22,9 +22,9 @@ struct LoginView: View {
                 .padding(.horizontal)
             
             if vm.isLogginIn {
-                LoginFields()
+                LoginFields(email: $vm.email, password: $vm.password)
             } else {
-                SignUpFields()
+                SignUpFields(firstName: $vm.firstName, lastName: $vm.lastName, email: $vm.newEmail, password: $vm.newPassword)
             }
             
             HStack {
