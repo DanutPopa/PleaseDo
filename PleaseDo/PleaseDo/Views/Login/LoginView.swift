@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var vm = LoginVM()
+    @EnvironmentObject var vm: LoginVM
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -50,4 +50,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environmentObject(LoginVM())
 }

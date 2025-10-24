@@ -15,7 +15,8 @@ final class LoginVM: ObservableObject {
         case unknown, loggedIn, loggedOut
     }
     
-    @Published var loggedStatus: Status = .unknown
+    @Published var loginStatus: Status = .unknown
+    
     @Published var isLogginIn = true {
         didSet {
             if isLogginIn {
@@ -42,7 +43,19 @@ final class LoginVM: ObservableObject {
     @Published var firstName = ""
     @Published var lastName = ""
     
+    init() {
+        auth.delegate = self
+    }
+    
     func signUp() {
         auth.signUP(firstName, lastName: lastName, newEmail, newPassword)
     }
+}
+
+extension LoginVM: LoginManagerDelegate {
+    func authStateDidChange(isLoggedIn: Bool) {
+        loginStatus = isLoggedIn ? .loggedIn : .loggedOut
+    }
+    
+    
 }
