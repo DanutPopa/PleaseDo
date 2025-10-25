@@ -13,9 +13,11 @@ struct Item: Identifiable, Equatable, Hashable {
     let authorId: String
     var title: String
     var description: String
-    var startDate: Date = .now
+    var startDate: Date
     var status: Status
     var priority: Priority
+    
+    static let example = Item(id: "12345", authorId: "Unknown", title: "Unknown", description: "Unknown", status: .unknown, priority: .low)
     
     init(data: [String: Any]) {
         id = data["id"] as! String
@@ -35,6 +37,16 @@ struct Item: Identifiable, Equatable, Hashable {
     
     static func ==(lhs: Item, rhs: Item) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    init(id: String, authorId: String, title: String, description: String, startDate: Date = .now, status: Status, priority: Priority) {
+        self.id = id
+        self.authorId = authorId
+        self.title = title
+        self.description = description
+        self.startDate = startDate
+        self.status = status
+        self.priority = priority
     }
 }
 
