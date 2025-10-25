@@ -54,12 +54,14 @@ final class LoginVM: ObservableObject {
             auth.signUP(firstName, lastName: lastName, newEmail, newPassword)
         }
     }
+    
+    func signOut() {
+        auth.signOut()
+    }
 }
 
 extension LoginVM: LoginManagerDelegate {
     func authStateDidChange(isLoggedIn: Bool) {
         loginStatus = isLoggedIn ? .loggedIn : .loggedOut
     }
-    
-    
 }
