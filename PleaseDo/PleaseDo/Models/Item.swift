@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Item: Identifiable, Equatable, Hashable {
     let id: String
@@ -16,7 +17,21 @@ struct Item: Identifiable, Equatable, Hashable {
     var status: Status
     var priority: Priority
     
-    static let example = Item(id: "abc123", authorId: "John Doe", title: "First item", description: "First description", status: .todo, priority: .low)
+    init(data: [String: Any]) {
+        id = data["id"] as! String
+        authorId = data["authorId"] as! String
+        title = data["title"] as! String
+        description = data["description"] as! String
+        
+        let timestamp = data["startDate"] as! Timestamp
+        startDate = timestamp.dateValue()
+        
+        let statusStr = data["status"] as! String
+        status = Status(statusStr)
+        
+        let priorityStr = data["priority"] as! String
+        priority = Priority(priorityStr)
+    }
     
     static func ==(lhs: Item, rhs: Item) -> Bool {
         lhs.id == rhs.id

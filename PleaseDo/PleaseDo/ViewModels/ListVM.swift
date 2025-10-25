@@ -25,4 +25,8 @@ final class ListVM: ObservableObject {
         Item(id: "789xyz", authorId: "John Doe", title: "Third item", description: "Third description", startDate: .now + 10, status: .todo, priority: .low)
     ]
     @Published var unknown: [Item] = []
+    
+    func fetchItems() {
+        ItemsManager.shared.fetchItems()
+    }
 }
