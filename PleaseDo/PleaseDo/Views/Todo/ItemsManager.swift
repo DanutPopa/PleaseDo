@@ -9,9 +9,26 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+protocol ItemsManagerDelegate where Self: ListVM {
+    func didFetchItems(_ items: [Status: [Item]])
+    func didAddItem(_ item: Item)
+    func didUpdateItem(_ item: Item)
+    func didDeleteItem(_ item: Item)
+}
+
 final class ItemsManager {
     static let shared = ItemsManager()
+    
+    weak var delegate: ItemsManagerDelegate?
     private let db = Firestore.firestore()
+    
+    private var isInitialFetch = true
+    
+    private var allItems: [Status: [Item]] = [
+        .todo: [],
+        .inProgress: [],
+        .done: []
+    ]
     
     private init() {}
     
@@ -21,27 +38,46 @@ final class ItemsManager {
         }
         let id = currentUser.uid
         db.collection("Items").whereField("authorId", isEqualTo: id)
-            .addSnapshotListener { querySnapshot, error in
+            .addSnapshotListener { [weak self] querySnapshot, error in
                 if let error {
                     print("Error fetching documents: \(error)")
                     return
                 }
                 
-                guard let querySnapshot else { return }
-                
-                querySnapshot.documentChanges.forEach { change in
+                guard let self, let querySnapshot else { return }
+                querySnapshot.documentChanges.forEach { [weak self] change in
                     let data = change.document.data()
                     let item = Item(data: data)
+                    guard let self else { return }
                     
                     switch change.type {
                     case .added:
-                        <#code#>
+                        if isInitialFetch {
+                            allItems[item.status]?.append(item)
+                        } else {
+                            delegate?.didAddItem(item)
+                        }
                     case .modified:
-                        <#code#>
+                        delegate?.didUpdateItem(item)
                     case .removed:
-                        <#code#>
+                        delegate?.didDeleteItem(item)
                     }
                 }
+                guard isInitialFetch else { return }
+                sortItems()
+                isInitialFetch = false
             }
+    }
+    
+    private func sortItems() {
+        var sortedItems: [Status: [Item]] = [:]
+        
+        allItems.keys.forEach { status in
+            sortedItems[status] = allItems[status]?.sorted(by: {
+                $0.startDate > $1.startDate
+            })
+        }
+        
+        delegate?.didFetchItems(sortedItems)
     }
 }
