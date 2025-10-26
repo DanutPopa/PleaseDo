@@ -24,7 +24,7 @@ final class ItemsManager {
     
     private var isInitialFetch = true
     
-    private var allItems: [Status: [Item]] = [
+    private var allItems: [Status: Set<Item>] = [
         .todo: [],
         .inProgress: [],
         .done: []
@@ -53,7 +53,7 @@ final class ItemsManager {
                     switch change.type {
                     case .added:
                         if isInitialFetch {
-                            allItems[item.status]?.append(item)
+                            allItems[item.status]?.insert(item)
                         } else {
                             delegate?.didAddItem(item)
                         }
