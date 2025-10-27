@@ -80,4 +80,15 @@ final class ItemsManager {
         
         delegate?.didFetchItems(sortedItems)
     }
+    
+    func save(_ item: Item) async throws {
+        // Add a new document in collection "cities"
+        do {
+            try await db.collection("Items").document(item.id).setData(item.toObject())
+            print("Document successfully written!")
+        } catch {
+            print("Error writing document: \(error)")
+            throw error
+        }
+    }
 }

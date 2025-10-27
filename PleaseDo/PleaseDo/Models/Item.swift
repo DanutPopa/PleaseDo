@@ -35,10 +35,6 @@ struct Item: Identifiable, Equatable, Hashable {
         priority = Priority(priorityStr)
     }
     
-    static func ==(lhs: Item, rhs: Item) -> Bool {
-        lhs.id == rhs.id
-    }
-    
     init(id: String, authorId: String, title: String, description: String, startDate: Date = .now, status: Status, priority: Priority) {
         self.id = id
         self.authorId = authorId
@@ -47,6 +43,27 @@ struct Item: Identifiable, Equatable, Hashable {
         self.startDate = startDate
         self.status = status
         self.priority = priority
+    }
+    
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    static func empty() -> Item {
+        Item(id: "", authorId: "", title: "", description: "", status: .todo, priority: .low)
+    }
+    
+    func toObject() -> [String: Any] {
+        var data: [String: Any] = [:]
+        data["id"] = id
+        data["authorId"] = authorId
+        data["title"] = title
+        data["description"] = description
+        data["startDate"] = Timestamp(date: startDate)
+        data["status"] = status.rawValue
+        data["priority"] = priority.rawValue
+        
+        return data
     }
 }
 
