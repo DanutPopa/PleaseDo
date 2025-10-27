@@ -51,7 +51,7 @@ struct HomeView: View {
             .navigationDestination(for: NavPath.self, destination: { path in
                 switch path {
                 case .newItem:
-                    NewItemView()
+                    NewItemView(path: $path)
                 case .details(let item):
                     ItemDetailsView(item: item)
                 }
@@ -66,7 +66,9 @@ struct HomeView: View {
             } message: {
                 Text("Continue signing out?")
             }
-            
+        }
+        .onAppear {
+            vm.fetchItems()
         }
     }
 }
