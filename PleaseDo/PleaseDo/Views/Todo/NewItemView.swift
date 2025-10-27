@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NewItemView: View {
     @StateObject private var vm = NewItemVM()
+    @Binding var path: [NavPath]
     
     var body: some View {
         VStack {
@@ -31,15 +32,20 @@ struct NewItemView: View {
             Spacer()
             
             CTAButton(title: "Confirm") {
-                Task {
-                    do {
-                        try await vm.saveNewItem()
-                    } catch {
-                        
-                    }
-                }
+                vm.saveNewItem()
             }
-            
+            .alert("Alert", isPresented: $vm.saveItemError) {
+                Button("Dismiss", role: .cancel) {}
+            } message: {
+                Text("Error saving new item.")
+            }
+            .alert("Success!", isPresented: $vm.didSaveItem) {
+                Button("Dismiss", role: .cancel) {
+                    path.removeLast()
+                }
+            } message: {
+                Text("New item saved succesfully!")
+            }
 
         }
         .padding(.horizontal)
@@ -47,5 +53,5 @@ struct NewItemView: View {
 }
 
 #Preview {
-    NewItemView()
+    NewItemView(path: .constant([]))
 }
