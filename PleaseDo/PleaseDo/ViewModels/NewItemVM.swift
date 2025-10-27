@@ -29,12 +29,16 @@ final class NewItemVM: ObservableObject {
         Task {
             do {
                 try await ItemsManager.shared.save(newItem)
-                didSaveItem = true
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    didSaveItem = true
+                }
             } catch {
-                saveItemError = true
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    saveItemError = true
+                }
             }
         }
     }
-    
-    
 }

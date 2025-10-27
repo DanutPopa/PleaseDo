@@ -21,6 +21,7 @@ final class ItemsManager {
     
     weak var delegate: ItemsManagerDelegate?
     private let db = Firestore.firestore()
+    private var listener: ListenerRegistration?
     
     private var isInitialFetch = true
     
@@ -32,13 +33,22 @@ final class ItemsManager {
     
     private init() {}
     
+    deinit {
+        removeListener()
+    }
+    
+    func removeListener() {
+        listener?.remove()
+        listener = nil
+    }
+    
     func fetchItems() {
         guard let currentUser = Auth.auth().currentUser else {
             return
         }
         let id = currentUser.uid
-        db.collection("Items").whereField("authorId", isEqualTo: id)
-            .addSnapshotListener { [weak self] querySnapshot, error in
+        removeListener()
+        listener = db.collection("Items").whereField("authorId", isEqualTo: id).addSnapshotListener { [weak self] querySnapshot, error in
                 if let error {
                     print("Error fetching documents: \(error)")
                     return
