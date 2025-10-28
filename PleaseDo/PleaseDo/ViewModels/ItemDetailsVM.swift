@@ -9,5 +9,6 @@ import Foundation
 import Combine
 
 final class ItemDetailsVM: ObservableObject {
-    
+    @Published var initialItem = Item.empty()
+    @Published var updatedItem = Item.example
 }

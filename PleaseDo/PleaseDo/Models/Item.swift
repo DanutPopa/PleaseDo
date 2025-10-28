@@ -53,6 +53,10 @@ struct Item: Identifiable, Equatable, Hashable {
         Item(id: "", authorId: "", title: "", description: "", status: .todo, priority: .low)
     }
     
+    func isDifferent(comparedTo item: Item) -> Bool {
+        id != item.id || authorId != item.authorId || title != item.title || description != item.description || startDate != item.startDate || status != item.status || priority != item.priority
+    }
+    
     func toObject() -> [String: Any] {
         var data: [String: Any] = [:]
         data["id"] = id
