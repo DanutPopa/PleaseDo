@@ -26,15 +26,15 @@ struct ListItemView: View {
             
             Spacer()
             
-            Image(systemName: "circle")
+            Image(systemName: item.priority.img)
                 .resizable()
                 .scaledToFit()
+                .foregroundStyle(item.priority.color)
                 .frame(maxHeight: height * 0.45)
-                .foregroundStyle(.blue)
         }
     }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    ListItemView(item: .example, height: 100)
+    ListItemView(item: .empty(), height: 100)
 }

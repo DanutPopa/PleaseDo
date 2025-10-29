@@ -14,6 +14,8 @@ final class ListVM: ObservableObject {
     @Published var doneItems: [Item] = []
     @Published var unknown: [Item] = []
     
+    @Published var shouldRedraw = false
+    
     init() {
         ItemsManager.shared.delegate = self
     }
@@ -89,6 +91,7 @@ extension ListVM: ItemsManagerDelegate {
                     moveItem(item)
                 }
             }
+            shouldRedraw.toggle()
         }
     }
     

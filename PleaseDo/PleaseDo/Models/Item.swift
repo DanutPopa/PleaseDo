@@ -13,11 +13,9 @@ struct Item: Identifiable, Equatable, Hashable {
     let authorId: String
     var title: String
     var description: String
-    var startDate: Date
+    var startDate: Date = .now
     var status: Status
     var priority: Priority
-    
-    static let example = Item(id: "12345", authorId: "Unknown", title: "Unknown", description: "Unknown", status: .unknown, priority: .low)
     
     init(data: [String: Any]) {
         id = data["id"] as! String
@@ -35,12 +33,11 @@ struct Item: Identifiable, Equatable, Hashable {
         priority = Priority(priorityStr)
     }
     
-    init(id: String, authorId: String, title: String, description: String, startDate: Date = .now, status: Status, priority: Priority) {
+    init(id: String, authorId: String, title: String, description: String, status: Status, priority: Priority) {
         self.id = id
         self.authorId = authorId
         self.title = title
         self.description = description
-        self.startDate = startDate
         self.status = status
         self.priority = priority
     }
@@ -51,6 +48,15 @@ struct Item: Identifiable, Equatable, Hashable {
     
     static func empty() -> Item {
         Item(id: "", authorId: "", title: "", description: "", status: .todo, priority: .low)
+    }
+    
+    func isDifferent(comparedTo item: Item) -> Bool {
+        id != item.id
+        || authorId != item.authorId
+        || title != item.title
+        || description != item.description
+        || startDate != item.startDate
+        || status != item.status || priority != item.priority
     }
     
     func toObject() -> [String: Any] {
@@ -64,37 +70,5 @@ struct Item: Identifiable, Equatable, Hashable {
         data["priority"] = priority.rawValue
         
         return data
-    }
-}
-
-enum Status: String, CaseIterable {
-    case todo = "To Do"
-    case inProgress = "In Progress"
-    case done = "Done"
-    case unknown = "Unknown"
-    
-    init(_ str: String) {
-        self = switch str.lowercased() {
-        case "to do": .todo
-        case "in progress": .inProgress
-        case "done": .done
-        default: .unknown
-        }
-    }
-}
-
-enum Priority: String, CaseIterable {
-    case low = "Low"
-    case medium = "Medium"
-    case high = "High"
-    case unknown = "Unknown"
-    
-    init(_ str: String) {
-        self = switch str.lowercased() {
-        case "low": .low
-        case "medium": .medium
-        case "high": .high
-        default: .unknown
-        }
     }
 }
