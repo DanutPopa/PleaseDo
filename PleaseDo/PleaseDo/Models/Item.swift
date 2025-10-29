@@ -54,7 +54,12 @@ struct Item: Identifiable, Equatable, Hashable {
     }
     
     func isDifferent(comparedTo item: Item) -> Bool {
-        id != item.id || authorId != item.authorId || title != item.title || description != item.description || startDate != item.startDate || status != item.status || priority != item.priority
+        id != item.id
+        || authorId != item.authorId
+        || title != item.title
+        || description != item.description
+        || startDate != item.startDate
+        || status != item.status || priority != item.priority
     }
     
     func toObject() -> [String: Any] {
@@ -68,37 +73,5 @@ struct Item: Identifiable, Equatable, Hashable {
         data["priority"] = priority.rawValue
         
         return data
-    }
-}
-
-enum Status: String, CaseIterable {
-    case todo = "To Do"
-    case inProgress = "In Progress"
-    case done = "Done"
-    case unknown = "Unknown"
-    
-    init(_ str: String) {
-        self = switch str.lowercased() {
-        case "to do": .todo
-        case "in progress": .inProgress
-        case "done": .done
-        default: .unknown
-        }
-    }
-}
-
-enum Priority: String, CaseIterable {
-    case low = "Low"
-    case medium = "Medium"
-    case high = "High"
-    case unknown = "Unknown"
-    
-    init(_ str: String) {
-        self = switch str.lowercased() {
-        case "low": .low
-        case "medium": .medium
-        case "high": .high
-        default: .unknown
-        }
     }
 }
