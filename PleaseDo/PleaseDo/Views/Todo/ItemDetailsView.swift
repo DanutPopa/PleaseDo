@@ -60,6 +60,6 @@ struct ItemDetailsView: View {
 
 #Preview {
     NavigationStack {
-        ItemDetailsView(item: .example, path: .constant([]))
+        ItemDetailsView(item: .empty(), path: .constant([]))
     }
 }

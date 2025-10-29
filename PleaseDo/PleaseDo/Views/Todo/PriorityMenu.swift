@@ -23,6 +23,7 @@ struct PriorityMenu: View {
                             EmptyView()
                         } else {
                             Text(priority.rawValue)
+                                .tag(priority)
                         }
                     }
                 }

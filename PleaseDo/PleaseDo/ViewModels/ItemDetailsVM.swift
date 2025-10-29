@@ -10,7 +10,7 @@ import Combine
 
 final class ItemDetailsVM: ObservableObject {
     @Published var initialItem = Item.empty()
-    @Published var updatedItem = Item.example
+    @Published var updatedItem = Item.empty()
     @Published var didUpdateItem = false
     @Published var updateItemError = false
     
