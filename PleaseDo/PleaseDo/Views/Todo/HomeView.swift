@@ -20,11 +20,11 @@ struct HomeView: View {
                     .ignoresSafeArea()
                 
                 TabView {
-                    ListView(title: "To Do", items: $vm.todoItems)
+                    ListView(title: "To Do", items: $vm.todoItems, shouldRedraw: $vm.shouldRedraw)
                     
-                    ListView(title: "In Progress", items: $vm.inProgressItems)
+                    ListView(title: "In Progress", items: $vm.inProgressItems, shouldRedraw: $vm.shouldRedraw)
                     
-                    ListView(title: "Done", items: $vm.doneItems)
+                    ListView(title: "Done", items: $vm.doneItems, shouldRedraw: $vm.shouldRedraw)
                 }
                 .tabViewStyle(.page)
             }
@@ -53,7 +53,7 @@ struct HomeView: View {
                 case .newItem:
                     NewItemView(path: $path)
                 case .details(let item):
-                    ItemDetailsView(item: item)
+                    ItemDetailsView(item: item, path: $path)
                 }
             })
             .confirmationDialog("Continue signing out?", isPresented: $showLogout) {

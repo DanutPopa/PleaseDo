@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ItemDetailsView: View {
     let item: Item
+    @Binding var path: [NavPath]
     @StateObject private var vm = ItemDetailsVM()
     
     var body: some View {
@@ -31,9 +32,22 @@ struct ItemDetailsView: View {
             
             if vm.initialItem.isDifferent(comparedTo: vm.updatedItem) {
                 CTAButton(title: "Confirm") {
-                    print("CTAButton tapped")
+                    vm.updateItem()
+                }
+                .alert("Alert", isPresented: $vm.updateItemError) {
+                    Button("Dismiss", role: .cancel) {}
+                } message: {
+                    Text("Error updating new item.")
+                }
+                .alert("Success!", isPresented: $vm.didUpdateItem) {
+                    Button("Dismiss", role: .cancel) {
+                        path.removeLast()
+                    }
+                } message: {
+                    Text("Item updated succesfully!")
                 }
             }
+            
         }
         .padding()
         .navigationTitle("Details")
@@ -46,6 +60,6 @@ struct ItemDetailsView: View {
 
 #Preview {
     NavigationStack {
-        ItemDetailsView(item: .example)
+        ItemDetailsView(item: .example, path: .constant([]))
     }
 }
